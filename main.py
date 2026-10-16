@@ -66,6 +66,13 @@ if has_recent:
     )
     r_corr = float(np.corrcoef(recent["연도"], recent["연평균기온"])[0, 1])
 
+# 0. 데이터 기본 정보
+st.info(
+    f"회귀 직선은 **{n_years}개 연도**의 자료로 만들었습니다 "
+    f"(시작 연도 **{start_year}년**, 끝 연도 **{end_year}년**). "
+    f"{LAST_YEAR}년 이후 자료와 관측일이 {MIN_DAYS}일 미만인 해는 제외했습니다."
+)
+
 # 1. 예측
 year = st.slider("예측할 연도", min_value=1900, max_value=2100, value=2050, step=1)
 pred = slope * year + intercept
@@ -170,9 +177,4 @@ if has_recent:
         "표본이 20개 안팎이라 해마다 변동의 영향을 크게 받습니다."
     )
 
-st.info(
-    f"회귀 직선은 **{n_years}개 연도**의 자료로 만들었습니다 "
-    f"(시작 연도 **{start_year}년**, 끝 연도 **{end_year}년**). "
-    f"{LAST_YEAR}년 이후 자료와 관측일이 {MIN_DAYS}일 미만인 해는 제외했습니다."
-)
 st.caption(f"회귀식: 기온 = {slope:.5f} × 연도 + {intercept:.3f}")
